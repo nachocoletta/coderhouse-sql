@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS DIRECCION (
     FOREIGN KEY (ID_PAIS) REFERENCES PAIS (ID_PAIS) ON DELETE RESTRICT
 );
 
+
+
 CREATE TABLE IF NOT EXISTS CARRITO (
 	ID_CARRITO INT AUTO_INCREMENT,
     TOTAL DOUBLE,
@@ -110,7 +112,19 @@ CREATE TABLE IF NOT EXISTS ORDEN (
     PRIMARY KEY (ID_ORDEN),
     FOREIGN KEY (ID_FACTURA) REFERENCES FACTURA (ID_FACTURA) ON DELETE RESTRICT
 );
+/*
+CREATE TABLE IF NOT EXISTS WORKCLASS (
 
+	ID_WORKCLASS INT PRIMARY KEY,
+    WORKCLASS VARCHAR(40)
+);
+
+CREATE TABLE IF NOT EXISTS TABLA_GENERAL (
+	ID_GENERAL INT PRIMARY KEY,
+    ID_WORKCLASS INT,
+    FOREIGN KEY (ID_WORKCLASS) REFERENCES WORKCLASS (ID_WORKCLASS)
+);
+*/
 CREATE TABLE IF NOT EXISTS PAGO (
 	ID_PAGO INT AUTO_INCREMENT,
     FECHA_PAGO DATETIME NOT NULL,
@@ -747,6 +761,37 @@ BEGIN
 END; $$
 
 DELIMITER ;
+
+
+create user if not EXISTS coderhouse@localhost IDENTIFIED by 'coderhouse';
+CREATE USER IF NOT EXISTS nacho@localhost IDENTIFIED BY '1234';
+CREATE USER IF NOT EXISTS pepe@localhost IDENTIFIED BY '1234';
+
+
+grant select on proyecto_final.pais to coderhouse@localhost;
+grant select on proyecto_final.carrito to coderhouse@localhost;
+grant select on proyecto_final.factura to coderhouse@localhost;
+
+GRANT SELECT, UPDATE ON proyecto_final.* to nacho@localhost;
+
+GRANT SELECT, DELETE ON proyecto_final.* to pepe@localhost;
+show grants for pepe@localhost;
+
+grant S
+DROP USER pepe@localhost;
+
+
+
+
+
+
+
+-- GRANT SELECT, INSERT ON proyecto_final.calificacion TO coderhouse@localhost;
+
+
+-- Para agregar un registro en class van a tener que desactivar la variable de entorno SET @@FOREIGN_KEY_CHECKS = 0;
+
+
 /*
 -- ------------------------------------------------------
 -- ESTO SERIA PARA HACER CON SQL DINAMICO SEGUN EL PROFE
